@@ -1,31 +1,41 @@
-'use client'
-import React, { useRef, useState } from 'react';
+"use client";
+import React from "react";
 // Import Swiper React components
-import { Swiper, SwiperSlide } from 'swiper/react';
+import { Swiper, SwiperSlide } from "swiper/react";
 
 // Import Swiper styles
-import 'swiper/css';
-import 'swiper/css/pagination';
+import "swiper/css";
+import "swiper/css/navigation"; // スタイルをインポート
+import "swiper/css/pagination"; // スタイルをインポート
 
-import './styles.css';
+// import Swiper core and required modules
+import { Navigation, Pagination } from "swiper/modules";
+import { Box, Typography } from "@mui/material";
 
-// import required modules
-import { Pagination } from 'swiper/modules';
-
-export default function Home() {
+export default function App() {
   return (
-    <>
-      <Swiper pagination={true} modules={[Pagination]} className="mySwiper">
-        <SwiperSlide>Slide 1</SwiperSlide>
-        <SwiperSlide>Slide 2</SwiperSlide>
-        <SwiperSlide>Slide 3</SwiperSlide>
-        <SwiperSlide>Slide 4</SwiperSlide>
-        <SwiperSlide>Slide 5</SwiperSlide>
-        <SwiperSlide>Slide 6</SwiperSlide>
-        <SwiperSlide>Slide 7</SwiperSlide>
-        <SwiperSlide>Slide 8</SwiperSlide>
-        <SwiperSlide>Slide 9</SwiperSlide>
-      </Swiper>
-    </>
+    <Box className="App" padding={2} sx={{ height: "100vh" }}>
+      <Typography variant={"h4"} align={"center"} fontWeight={700}>
+        Swiper + Material-UI example
+      </Typography>
+      <Box marginTop={4}>
+        <Swiper
+          modules={[Navigation, Pagination]}
+          pagination
+          navigation
+          className="mySwiper"
+        >
+          {["Slide 1", "Slide 2", "Slide 3"].map((item, i) => (
+            <SwiperSlide key={i}>
+              <Box>
+                <Typography variant={"h6"} align={"center"}>
+                  {item}
+                </Typography>
+              </Box>
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </Box>
+    </Box>
   );
 }
