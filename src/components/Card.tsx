@@ -1,14 +1,46 @@
 import { Box, Stack, Typography } from "@mui/material";
-import React from "react";
+import React, { FC } from "react";
+import PeopleIcon from "@mui/icons-material/People";
 import VolunteerActivismIcon from "@mui/icons-material/VolunteerActivism";
+import HourglassTopIcon from "@mui/icons-material/HourglassTop";
+import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
+import { BorderClear } from "@mui/icons-material";
 
 type Props = {
-  iconType: string;
+  iconType: 'welcome' | 'time' | 'blance' | 'bell' | 'eye' | 'peace' | 'heart' | string;
   title: string;
   description: string;
 };
 
-export const Card = () => {
+export const Card: FC<Props> = ({ iconType, title, description }) => {
+  const timeIcon = "/time.png";
+  const blanceIcon = "/blance.png";
+  const bellIcon = "/bell.png";
+  const eyeIcon = "/eye.png";
+  const welcomeIcon = "/welcome.png";
+  const peaceIcon = "/peace.png";
+  const heartIcon = "/heart.png";
+
+  const iconManagement = (iconType: string) => {
+    switch (iconType) {
+      case "time":
+        return <Box component={"img"} src={timeIcon} height={100} />;
+      case "blance":
+        return <Box component={"img"} src={blanceIcon} height={100} />;
+      case "bell":
+        return <Box component={"img"} src={bellIcon} height={100} />;
+      case "eye":
+        return <Box component={"img"} src={eyeIcon} height={100} />;
+      case "welcome":
+        return <Box component={"img"} src={welcomeIcon} height={100} />;
+      case "peace":
+        return <Box component={"img"} src={peaceIcon} height={100} />;
+      case "heart":
+        return <Box component={"img"} src={heartIcon} height={100} />;
+      default:
+        return <Box component={"img"} src={timeIcon} height={100} />;
+    }
+  };
   return (
     <Box
       sx={{
@@ -22,15 +54,15 @@ export const Card = () => {
     >
       <Stack spacing={2}>
         <Box sx={{ textAlign: "center" }}>
-          <VolunteerActivismIcon style={{ fontSize: 100 }} />
+         {iconManagement(iconType)}
         </Box>
         <Box sx={{ textAlign: "center" }}>
           <Typography variant="h6" component="h2">
-            ようこそゲストWi-Fiへ！
+           {title}
           </Typography>
         </Box>
         <Typography variant="body1" component="h2" sx={{ textAlign: "center" }}>
-          このWi-Fiは利用者が公平にネットワークを利用できるようにいくつかのルールがあります。
+          {description}
         </Typography>
       </Stack>
     </Box>
