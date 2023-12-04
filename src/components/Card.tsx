@@ -2,7 +2,7 @@ import { Box, Stack, Typography } from "@mui/material";
 import React, { FC } from "react";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import TimelineIcon from "@mui/icons-material/Timeline";
-import HourglassTopIcon from "@mui/icons-material/HourglassTop";
+import CallSplitIcon from '@mui/icons-material/CallSplit';
 
 type Props = {
   iconType: string;
@@ -14,13 +14,13 @@ export const Card: FC<Props> = ({ iconType, title, description }) => {
   const iconManagement = (iconType: string) => {
     switch (iconType) {
       case "eye":
-        return <RemoveRedEyeIcon sx={{ fontSize: 100 }} />;
+        return <RemoveRedEyeIcon sx={{ fontSize: 80 }} />;
       case "graph":
-        return <TimelineIcon sx={{ fontSize: 100 }} />;
+        return <TimelineIcon sx={{ fontSize: 80 }} />;
       case "time":
-        return <HourglassTopIcon sx={{ fontSize: 100 }} />;
+        return <CallSplitIcon sx={{ fontSize: 80 }} />;
       default:
-        return <RemoveRedEyeIcon sx={{ fontSize: 100 }} />;
+        return <RemoveRedEyeIcon sx={{ fontSize: 80 }} />;
     }
   };
 
@@ -34,8 +34,9 @@ export const Card: FC<Props> = ({ iconType, title, description }) => {
     <Box
       sx={{
         width: "100%",
-        height: "300px",
         bgcolor: "background.paper",
+        color: "#000000",
+        borderRadius: "10px",
         p: 2,
       }}
     >

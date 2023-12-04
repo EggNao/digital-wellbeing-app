@@ -1,17 +1,15 @@
 "use client";
-import { Box, Button, Stack, Typography } from "@mui/material";
+import { Box, Button, Modal, Stack, Typography } from "@mui/material";
 import * as React from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
+import ArrowDropDownTwoToneIcon from "@mui/icons-material/ArrowDropDownTwoTone";
 
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 
-// import Swiper core and required modules
-import { Navigation, Pagination } from "swiper/modules";
-import { useRef } from "react";
 import { Card } from "@/components/Card";
+import { useState } from "react";
 
 // スライドのデータを表す配列
 const slidesData = [
@@ -23,104 +21,133 @@ const slidesData = [
   {
     iconType: "graph",
     title: "他の人との比較",
-    description: "他の人の比べて30%多くネットワーク資源を使用しています。",
+    description:
+      "他の人の比べて30%も多く周囲の人の作業を阻害するコンテンツ使用しています。",
   },
   {
     iconType: "time",
-    title: "通信制限",
+    title: "速度制限",
     description:
-      "ここで動画ストリーミングの利用を中断することで、あなたは通信速度を制限されることなくコンテンツを利用できます。",
+      "動画ストリーミングの利用を控えることで、引き続き快適な通信速度を利用できます。",
   },
 ];
 
 export default function Home() {
-  const swiperRef = useRef(null); // Swiperへの参照を作成
-  const digitalIcon = "/digital.png";
-
-  const goNext = () => {
-    if (swiperRef.current && swiperRef.current.swiper) {
-      swiperRef.current.swiper.slideNext();
-    }
-  };
-
-  const goPrev = () => {
-    if (swiperRef.current && swiperRef.current.swiper) {
-      swiperRef.current.swiper.slidePrev();
-    }
-  };
+  const [pattern, setPattern] = useState(3);
+  const [open, setOpen] = useState(true);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
   return (
-    <Box sx={{ bgcolor: "#F0F3F6", p: 2 }}>
-      <Stack alignItems={"center"} spacing={2} sx={{ textAlign: "center" }}>
-        <Typography
-          variant="body1"
-          color="initial"
-          sx={{ fontSize: 24, fontWight: "medium" }}
-        >
-          ようこそゲストWi-Fiへ
-        </Typography>
-        <Typography variant="body1" color="initial" sx={{ color: "red" }}>
-          あなたが通信量を多く必要とするコンテンツを利用し続けると通信速度を制限することがあります。
-        </Typography>
-        <Typography variant="body1" color="initial">
-          ネットワーク資源は限られています。通信量を多く必要とするコンテンツの利用は控えてください。
-        </Typography>
-        <Box sx={{ bgcolor: "#FFFFFF", p: 1.5, borderRadius: "10px" }}>
-          <Stack direction={"row"} alignItems={"center"}>
-            <Typography variant="body1" color="initial">
-              SNSや動画ストリーミングの利用を控えることで、通信の混雑を緩和させ、周囲の人たちがメイン作業を快適に取り組むことができます。
-            </Typography>
-            <Box
-              component={"img"}
-              src={digitalIcon}
-              width="80px"
-              height="80px"
-            />
-          </Stack>
-        </Box>
+    <>
+      <Box sx={{ height: "100vh", bgcolor: "#F0F3F6" }}></Box>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
         <Box
           sx={{
-            width: "100%", // スマホでは300px、それ以上では500px
-            height: "300px", // スマホでは200px、それ以上では350px
-            borderRadius: "10px",
+            bgcolor: "#F0F3F6",
+            p: 1.5,
+            width: "95%",
+            borderRadius: "5px",
+            maxHeight: "90vh", // ここに最大高さを設定
+            overflow: "auto", // スクロール可能にするための設定
           }}
         >
-          <Swiper
-            modules={[Navigation, Pagination]}
-            pagination
-            navigation
-            className="mySwiper"
-            slidesPerView={1}
-            ref={swiperRef}
-          >
-            {slidesData.map((slide, index) => (
-              <SwiperSlide key={index}>
-                <Box
-                  sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    height: "100%",
-                  }}
-                >
-                  <Card
-                    iconType={slide.iconType}
-                    title={slide.title}
-                    description={slide.description}
+          <Stack alignItems={"center"} spacing={1} sx={{ textAlign: "center" }}>
+            <Typography
+              variant="body1"
+              color="initial"
+              sx={{ fontSize: 24, fontWight: "medium", color: "#000000" }}
+            >
+              Welcome Guest Wi-Fi
+            </Typography>
+            {pattern >= 2 && (
+              <Typography
+                variant="body1"
+                color="initial"
+                sx={{
+                  color: "red",
+                  border: 1,
+                  borderColor: "error.main",
+                  borderRadius: "8px",
+                  fontWeight: "bold",
+                  p: 1,
+                }}
+              >
+                このWi-Fiは、あなたが通信量を多く消費すると通信速度を制限することができます。
+              </Typography>
+            )}
+            <Stack
+              alignItems={"center"}
+              spacing={0}
+              sx={{ textAlign: "center" }}
+            >
+              <Typography
+                variant="body1"
+                color="initial"
+                sx={{ color: "#000000" }}
+              >
+                SNS、動画ストリーミング、大容量ファイルのダウンロードなど、帯域幅を大きく消費する活動は控えてください。これらはネットワークの負担を増やし、他のユーザーの通信速度に悪影響を与える可能性があります。
+              </Typography>
+              {pattern >= 1 && (
+                <>
+                  <ArrowDropDownTwoToneIcon
+                    sx={{ fontSize: 60, color: "#000000" }}
                   />
-                </Box>
-              </SwiperSlide>
-            ))}
-          </Swiper>
+                  <Typography
+                    variant="body1"
+                    color="initial"
+                    sx={{
+                      color: "#000000",
+                      border: 1,
+                      borderColor: "#000000",
+                      borderRadius: "8px",
+                      p: 1,
+                    }}
+                  >
+                    このような他者への小さな配慮がネットワークの混雑を緩和させ、他の利用者のインターネット体験を向上させることに貢献します。
+                  </Typography>
+                </>
+              )}
+            </Stack>
+
+            {pattern == 3 && (
+              <Card
+                iconType={"eye"}
+                title={"モニタリング結果"}
+                description={"Youtube: 20分\nTikTok: 13分\nInstagram: 5分"}
+              />
+            )}
+            {pattern == 4 && (
+              <Card
+                iconType={"graph"}
+                title={"他の人との比較"}
+                description={
+                  "あなたは他の人に比べて30%も多く、周囲の人の作業に支障をきたすようなコンテンツを利用しています。"
+                }
+              />
+            )}
+            {pattern == 5 && (
+              <Card
+                iconType={"time"}
+                title={"シミュレーションの結果"}
+                description={
+                  "SNSや動画ストリーミングの利用を控えることで、あなたの通信速度を制限することなくインターネットを利用できます。継続して利用した場合は、通信速度が制限される可能性があります。"
+                }
+              />
+            )}
+            <Button variant="contained" onClick={handleClose}>
+              閉じる
+            </Button>
+          </Stack>
         </Box>
-        <Stack direction={"row"} spacing={6}>
-          <Button variant="contained" onClick={goPrev}>
-            前へ
-          </Button>
-          <Button variant="contained" onClick={goNext}>
-            次へ
-          </Button>
-        </Stack>
-      </Stack>
-    </Box>
+      </Modal>
+    </>
   );
 }
